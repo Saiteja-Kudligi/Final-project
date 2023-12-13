@@ -22,10 +22,6 @@ let emotionsLabels = ["sad", "happy", "surprise", "angry", "neutral"];
 let selectedCharacter = "emoji";
 
 let characterDropdown;
-// let ratImage;
-// let emojiImage;
-// let catImage;
-// let dogImage;
 
 function preload() {
   ratImage = loadImage("assets/rat.png");
@@ -72,7 +68,7 @@ function setup() {
   canvas.id("canvas");
 
   video = createCapture(VIDEO);
-  video.size(640, 480);
+  video.size(720, 480);
   video.position(windowWidth / 3.5, 130);
 
   button = createButton("Click me to toggle video");
