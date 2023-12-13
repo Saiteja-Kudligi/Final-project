@@ -4,6 +4,7 @@ let Video = [];
 let video;
 let canvas1;
 let canvas2;
+let canvas3;
 let button;
 let videoActive = true;
 
@@ -21,22 +22,20 @@ function preload() {
 
 function setup() {
   
-  canvas1 = createCanvas(640, 480);
-  canvas1.id("canvas1");
-  canvas1.hide();
+  // canvas1 = createCanvas(640, 480);
+  // canvas1.id("canvas1"); 
 
   canvas2 = createCanvas(640, 480);
   canvas2.id("canvas2");
-  canvas2.hide();
-  canvas2.background(0); 
+  
 
   video = createCapture(VIDEO);
-  video.size(640, 480);
-  video.hide();
+  video.size(width,height);
+  video.position(windowWidth/3.5,120)
 
 
   button = createButton('Click me to toggle video');
-  button.position(320, 520);
+  button.position(680, 640);
   button.mousePressed(toggleVideoCanvas);
 
   const faceOptions = {
@@ -47,6 +46,47 @@ function setup() {
   faceapi = ml5.faceApi(video, faceOptions, ready);
   faceapi.detect(myVideo);
   
+}
+
+
+function drawCam(Video){
+
+  Expressions(Video);
+  function Expressions(Video) {
+    if (Video.length > 0) {
+      let { neutral, happy, angry, sad, surprised } = Video[0].expressions;
+  
+      textFont('Roboto');
+      textSize(18);
+      fill("White");
+      noStroke();
+  
+  
+      text("neutral: " + round(neutral * 100) + "%", width / 2, height - 100);
+      
+      if(happy>=0.7){
+       
+        image(happyEmoji, 20,20,100,100);
+      }
+  
+      if(angry>=0.3){
+        
+        image(angryEmoji, 20,20,100,100);
+      }
+  
+      if(surprised>=0.4){
+        
+        image(surpriseEmoji, 20,20,100,100);
+      }
+  
+      if(sad>=0.5){
+      
+        image(sadEmoji, 20,20,100,100);
+      }  
+  
+    }
+  }
+
 }
 
 function ready() {
@@ -64,9 +104,8 @@ function myVideo(error, result) {
 
   clearCanvas();
   drawBoxes(Video);
-  Expressions(Video);
+  drawCam(Video);
   faceapi.detect(myVideo);
-
   }
 
 function drawBoxes(Video) {
@@ -81,56 +120,19 @@ function drawBoxes(Video) {
   }
 }
 
-function Expressions(Video) {
-  if (Video.length > 0) {
-    let { neutral, happy, angry, sad, surprised } = Video[0].expressions;
 
-    textFont('Roboto');
-    textSize(18);
-    fill("White");
-    noStroke();
-
-
-    text("neutral: " + round(neutral * 100) + "%", width / 2, height - 100);
-    
-    if(happy>=0.7){
-      text("happiness: " + round(happy*100,2,2)+"%", width/2, height-100);
-      image(happyEmoji, 0, 0,height/2, width/2);
-    }
-
-    if(angry>=0.3){
-      text("anger: " + round(angry*100, 2, 2)+"%", width/2, height-100);
-      image(angryEmoji, 0, 0);
-    }
-
-    if(surprised>=0.4){
-      text("surprised: " + round(surprised*100, 2, 2)+"%", width/2, height-100);
-      image(surpriseEmoji, 0, 0);
-    }
-
-    if(sad>=0.5){
-      text("sad: "+ round(sad*100, 2, 2)+"%", width/2, height-100);
-      image(sadEmoji, 0, 0);
-    }  
-
-  }
-}
 
 function toggleVideoCanvas() {
   if (videoActive) {
     video.hide();
-    canvas1.hide();
-    canvas2.show();
+  
   } else {
     video.show();
-    canvas1.show();
-    canvas2.hide();
   }
   videoActive = !videoActive;
 }
 
 function clearCanvas() {
-  if (!videoActive) {
-    clear();
-  }
+  clear();
 }
+
