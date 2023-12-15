@@ -5,6 +5,7 @@
   z-index:1;
  
 }
+This is for V1 & V2 ;  for v1, Rename canvas1 to canvas
 
 #canvas2{
   position: absolute;
@@ -12,22 +13,20 @@
   left: 100px;
   z-index:2;
   
-} */
+} 
 
- /* 
-html, body{
-  height: 100%;
-}
+This is for V2
+*/
 
-body{
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}  */
+
 
 .image{
 top:40px;
 left : 100px;
 
 }
+
+h1,p{
+ line-height: 15px !important;
+}
+
